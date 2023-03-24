@@ -5,6 +5,8 @@ import '../../models/products_model.dart';
 
 class PopularProductController extends GetxController {
   final PopularProductRepo popularProductRepo;
+  bool _isLoaded = false;
+  bool get isLoaded => _isLoaded;
 
   PopularProductController({required this.popularProductRepo});
 
@@ -24,6 +26,7 @@ class PopularProductController extends GetxController {
       _popularProductList.addAll(Product.fromJson(response.body).products);
       print(_popularProductList);
       // this update will update our ui
+      _isLoaded = true;
       update();
     }else{
 
