@@ -1,6 +1,8 @@
 import 'package:food_delivery/data/repository/popular_product_repo.dart';
 import 'package:get/get.dart';
 
+import '../../models/products_model.dart';
+
 class PopularProductController extends GetxController {
   final PopularProductRepo popularProductRepo;
 
@@ -19,7 +21,8 @@ class PopularProductController extends GetxController {
 
     if(response.statusCode != 1){
       _popularProductList = [];
-   //   _popularProductList.addAll(we need model here);
+      _popularProductList.addAll(Product.fromJson(response.body).products);
+      print(_popularProductList);
       // this update will update our ui
       update();
     }else{

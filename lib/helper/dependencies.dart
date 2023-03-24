@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../data/repository/popular_product_repo.dart';
+import '../utils/app_constants.dart';
 
 Future<void> init() async {
 
 // api clients
-Get.lazyPut(()=> ApiClient(appBaseUrl: "hui hui"));
+Get.lazyPut(()=> ApiClient(appBaseUrl: AppConstants.BASE_URL));
 
 // repos
 Get.lazyPut(() => PopularProductRepo(apiClient: Get.find()));

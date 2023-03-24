@@ -1,3 +1,4 @@
+import 'package:food_delivery/utils/app_constants.dart';
 import 'package:get/get.dart';
 
 class ApiClient extends GetConnect implements GetxService {
@@ -8,7 +9,7 @@ class ApiClient extends GetConnect implements GetxService {
   ApiClient({required this.appBaseUrl}) {
     // taking baseUrl for GetConnect to send requests
     baseUrl = appBaseUrl;
-
+    token = AppConstants.TOKEN;
     // how long should a request try if failing
     timeout = Duration(seconds: 30);
 
