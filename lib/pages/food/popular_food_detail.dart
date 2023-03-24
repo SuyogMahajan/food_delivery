@@ -1,20 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/data/controllers/popular_product_controller.dart';
+import 'package:food_delivery/routes/route_helper.dart';
+import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/widgets/app_column.dart';
 import 'package:food_delivery/widgets/app_icon.dart';
 import 'package:food_delivery/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/icon_and_text_widget.dart';
 import '../../widgets/small_text.dart';
+import '../home/main_food_page.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key? key}) : super(key: key);
+  int pageId;
+  PopularFoodDetail({Key? key,required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product = Get.find<PopularProductController>().popularProductList[pageId];
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -26,10 +35,10 @@ class PopularFoodDetail extends StatelessWidget {
             child: Container(
               width: double.maxFinite,
               height: Dimensions.popularFoodImgSize,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage("assets/image/food0.png"))),
+                      image: NetworkImage(AppConstants.BASE_URL +AppConstants.UPLOAD_URL +product.img!))),
             ),
           ),
           //icon widget
@@ -39,8 +48,11 @@ class PopularFoodDetail extends StatelessWidget {
             right: Dimensions.width20,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                AppIcon(icon: Icons.arrow_back_ios),
+              children: [
+                GestureDetector(
+                    onTap: (){
+                      Get.toNamed(RouteHelper.getInitial());
+                    },child: AppIcon(icon: Icons.arrow_back_ios)),
                 AppIcon(icon: Icons.shopping_cart_outlined)
               ],
             ),
@@ -65,7 +77,7 @@ class PopularFoodDetail extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppColumn(
-                    text: "Chinese One",
+                    text: product.name!,
                   ),
                   SizedBox(
                     height: Dimensions.height20,
@@ -76,12 +88,11 @@ class PopularFoodDetail extends StatelessWidget {
                     height: Dimensions.height20,
                   ),
                   //expandable text widget
-                  const Expanded(
+                   Expanded(
                     child: SingleChildScrollView(
                       child: ExpandableTextWidget(
                           text:
-                              "Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time."
-                      ,
+                             product.description! ,
                       ),
                     ),
                   )
@@ -139,7 +150,7 @@ class PopularFoodDetail extends StatelessWidget {
                   left: Dimensions.width20,
                   right: Dimensions.width20),
               child: BigText(
-                text: "\$10 | Add to cart",
+                text: "\$ ${product.price} | Add to cart",
                 color: Colors.white,
               ),
               decoration: BoxDecoration(

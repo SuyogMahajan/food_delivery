@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/data/controllers/recommended_product_controller.dart';
+import 'package:food_delivery/routes/route_helper.dart';
+import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/app_icon.dart';
 import 'package:food_delivery/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../widgets/big_text.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({Key? key}) : super(key: key);
+  final int pageId;
+  const RecommendedFoodDetail({Key? key, required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product = Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 80,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(icon: Icons.clear),
+                GestureDetector(
+                    onTap: () {
+                      Get.toNamed(RouteHelper.initial);
+                    },
+                    child: const AppIcon(icon: Icons.clear)),
                 AppIcon(icon: Icons.shopping_cart_outlined)
               ],
             ),
@@ -36,15 +48,15 @@ class RecommendedFoodDetail extends StatelessWidget {
                     color: Colors.white),
                 child: Center(
                     child: BigText(
-                        size: Dimensions.font26, text: "Silver App Bar")),
+                        size: Dimensions.font26, text: product.name!)),
               ),
             ),
             pinned: true,
             backgroundColor: AppColors.yellowColor,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                "assets/image/food0.png",
+              background: Image.network(
+               AppConstants.BASE_URL+AppConstants.UPLOAD_URL+product.img!,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -58,8 +70,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     left: Dimensions.width20, right: Dimensions.width20),
                 child: ExpandableTextWidget(
                   text:
-                      "Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.Biryani is a rice dish cooked in a layered manner with meat and vegetables. It originated in Persia, but it was made popular by the Mughals, who ruled India for several centuries (1526 to 1857). The popularity of biryani spread throughout India after that time.",
-                ),
+                      product.description!),
               )
             ],
           ))
@@ -84,7 +95,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                   backgroundColor: AppColors.mainColor,
                 ),
                 BigText(
-                  text: "\$" + "12.88" + " X " + "0",
+                  text: "\$" + "${product.price!}" + " X " + "0",
                   color: AppColors.mainBlackColor,
                   size: Dimensions.font26,
                 ),
