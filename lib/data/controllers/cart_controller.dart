@@ -11,7 +11,7 @@ class CartController extends GetxController{
 
   CartController({required this.cartRepo});
 
-  // does product added previuslu
+  // does product added previus
   bool existInCart(ProductModel productModel) {
     return _items.containsKey(productModel.id!);
   }
@@ -66,7 +66,7 @@ class CartController extends GetxController{
     totalQuantity += value.quantity!;
   });
 
-  print("totalQuantity : $totalQuantity");
+  // print("totalQuantity : $totalQuantity");
 
   return totalQuantity;
 }
@@ -83,5 +83,12 @@ class CartController extends GetxController{
       });
     }
     return quantity;
+  }
+
+  List<CartModel> get getItems{
+
+    return _items.entries.map((e) {
+      return e.value;
+    }).toList();
   }
 }

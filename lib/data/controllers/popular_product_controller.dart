@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/data/repository/popular_product_repo.dart';
+import 'package:food_delivery/models/cart_model.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:get/get.dart';
 
@@ -31,6 +32,11 @@ class PopularProductController extends GetxController {
   int get totalItems{
     return _cart.totalItems;
   }
+
+  List<CartModel> get getItems{
+    return _cart.getItems;
+  }
+
   // getting dara from repository
   Future<void> getPopularProductList() async {
     //await will wait till we get a response
@@ -49,9 +55,10 @@ class PopularProductController extends GetxController {
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
       _quantity = checkQuantity(_quantity + 1);
-    } else {
+         } else {
       _quantity = checkQuantity(_quantity - 1);
     }
+    print("number of items ${_quantity.toString()}");
     update();
   }
 
