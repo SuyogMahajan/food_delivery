@@ -10,6 +10,7 @@ class Dimensions {
   static double pageView = screenHeight / 2.64;
 
 // dynamic height padding and margin
+  static double height5 = screenHeight / 168.8;
   static double height10 = screenHeight / 84.4;
   static double height15 = screenHeight / 56.27;
   static double height20 = screenHeight / 42.2;

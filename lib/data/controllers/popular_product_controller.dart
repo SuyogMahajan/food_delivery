@@ -28,6 +28,9 @@ class PopularProductController extends GetxController {
   // getter for list
   List<dynamic> get popularProductList => _popularProductList;
 
+  int get totalItems{
+    return _cart.totalItems;
+  }
   // getting dara from repository
   Future<void> getPopularProductList() async {
     //await will wait till we get a response
@@ -56,7 +59,7 @@ class PopularProductController extends GetxController {
     if ((_inCartItems + quantity) < 0) {
       Get.snackbar("Not possible", "you can't reduce more !",
           backgroundColor: AppColors.mainColor, colorText: Colors.white);
-      return 0;
+      return -1*_inCartItems;
     } else if ((_inCartItems + quantity) > 20) {
       Get.snackbar("Ohh Sorry !", "you can't add more !",
           backgroundColor: AppColors.mainColor, colorText: Colors.white);
@@ -79,10 +82,11 @@ class PopularProductController extends GetxController {
       _inCartItems = _cart.getQuantity(product);
       print("quantity in cart : " + _inCartItems.toString());
     }
+
   }
 
   void addItem(ProductModel productModel) {
-    if (_inCartItems + _quantity > 0) {
+    if (_inCartItems + _quantity >= 0) {
       _cart.addItem(productModel, _quantity);
       _quantity = 0;
       _inCartItems = _cart.getQuantity(productModel);
@@ -90,8 +94,10 @@ class PopularProductController extends GetxController {
         print("id ${value.id!} quantity ${value.quantity!}");
       });
     } else {
+
       Get.snackbar("Not possible !", "You should at least add one item.",
           backgroundColor: AppColors.iconColor1);
     }
+    update();
   }
 }

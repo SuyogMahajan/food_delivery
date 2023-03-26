@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/data/controllers/cart_controller.dart';
 import 'package:food_delivery/data/controllers/popular_product_controller.dart';
+import 'package:food_delivery/main.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/widgets/app_column.dart';
@@ -19,8 +20,10 @@ class PopularFoodDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var product = Get.find<PopularProductController>().popularProductList[pageId];
-    Get.find<PopularProductController>().initProduct(product,Get.find<CartController>());
+    var product =
+        Get.find<PopularProductController>().popularProductList[pageId];
+    Get.find<PopularProductController>()
+        .initProduct(product, Get.find<CartController>());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -41,6 +44,7 @@ class PopularFoodDetail extends StatelessWidget {
                           product.img!))),
             ),
           ),
+
           //icon widget
           Positioned(
             top: Dimensions.height50,
@@ -49,15 +53,68 @@ class PopularFoodDetail extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // back button
                 GestureDetector(
                     onTap: () {
                       Get.toNamed(RouteHelper.getInitial());
                     },
                     child: AppIcon(icon: Icons.arrow_back_ios)),
-                AppIcon(icon: Icons.shopping_cart_outlined)
+
+                GetBuilder<PopularProductController>(builder: (controller) {
+                  return
+                    Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(7),
+                          child: AppIcon(icon: Icons.shopping_cart_outlined),
+                        ),
+                        // controller.totalItems >= 1
+                        //
+                        //     ? Positioned(
+                        //         right: 0,
+                        //         top: 0,
+                        //         child: AppIcon(
+                        //           icon: Icons.circle,
+                        //           size: 20,
+                        //           backgroundColor: AppColors.mainColor,
+                        //           iconColor: AppColors.mainColor,
+                        //         ))
+                        //     : Container(),
+                        //
+                        // controller.totalItems >= 1
+                        //     ? Positioned(
+                        //     right: 3,
+                        //     top: 3,
+                        //     child:
+                        //     BigText(
+                        //       text: controller.totalItems.toString(),color: Colors.white,size: 12,
+                        //     )
+                        // )
+                        //     : Container()
+                        if (controller.totalItems >= 1)
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Container(
+                              padding:EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.mainColor),
+                              child: BigText(
+                                text: controller.totalItems.toString(),
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                            ),
+                          ),
+                      ],
+                  );
+                })
               ],
             ),
           ),
+
           //introduction of food
           Positioned(
             left: 0,
@@ -162,7 +219,7 @@ class PopularFoodDetail extends StatelessWidget {
                       left: Dimensions.width20,
                       right: Dimensions.width20),
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       popularProduct.addItem(product);
                     },
                     child: BigText(
