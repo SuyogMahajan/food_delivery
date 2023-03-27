@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/data/controllers/cart_controller.dart';
 import 'package:food_delivery/main.dart';
+import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
@@ -40,7 +41,7 @@ class CartPage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap:(){
-                      Get.to(()=> MainFoodPage());
+                      Get.toNamed(RouteHelper.getInitial());
                     },
                     child: AppIcon(
                       icon: Icons.home_outlined,
@@ -72,8 +73,9 @@ class CartPage extends StatelessWidget {
                 removeTop: true
 
                 , child: GetBuilder<CartController>(builder: (cartController){
-                return ListView.builder(
-                    itemCount: cartController.getItems.length,
+                var _cartList = cartController.getItems;
+                  return ListView.builder(
+                    itemCount: _cartList.length,
                     //for each item in list
                     itemBuilder: (_, index) {
                       return Container(
@@ -94,7 +96,7 @@ class CartPage extends StatelessWidget {
                                   color: Colors.white,
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(AppConstants.BASE_URL+AppConstants.UPLOAD_URL+cartController.getItems[index].img!)
+                                      image: NetworkImage(AppConstants.BASE_URL+AppConstants.UPLOAD_URL+_cartList[index].img!)
                                   )
                               ),
 
@@ -111,7 +113,7 @@ class CartPage extends StatelessWidget {
                                 children: [
 
                                   // title
-                                  BigText(text:cartController.getItems[index].name!,
+                                  BigText(text:_cartList[index].name!,
                                     color: Colors.black54,),
                                   SmallText(text: "sweet",),
 
@@ -119,7 +121,7 @@ class CartPage extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      BigText(text: "\$ ${cartController.getItems[index].price!}",color: Colors.red,),
+                                      BigText(text: "\$ ${_cartList[index].price!}",color: Colors.red,),
                                       Container(
                                         padding: EdgeInsets.only(
                                             top: Dimensions.height10,
@@ -142,7 +144,7 @@ class CartPage extends StatelessWidget {
                                               ),
                                             ),
                                             SizedBox(width: Dimensions.width10 / 2),
-                                            BigText(text:cartController.getItems[index].quantity.toString()),
+                                            BigText(text:_cartList[index].quantity.toString()),
                                             SizedBox(width: Dimensions.width10 / 2),
                                             GestureDetector(
                                               onTap: () {
