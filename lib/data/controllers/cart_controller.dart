@@ -32,6 +32,7 @@ class CartController extends GetxController{
            quantity: value.quantity! + quantity,
            isExist: true,
            time: DateTime.now().toString(),
+             product: value.product,
 
          );
 
@@ -46,6 +47,7 @@ class CartController extends GetxController{
              quantity: quantity,
              isExist: true,
              time: DateTime.now().toString(),
+             product: product,
            );
 
          });
@@ -56,6 +58,7 @@ class CartController extends GetxController{
         print("id $key quantity ${value.quantity!}")
       });
 
+      update();
   }
 
   // getting total products in cart
@@ -70,6 +73,16 @@ class CartController extends GetxController{
 
   return totalQuantity;
 }
+
+  int get totalAmount{
+    var totalAmount =0;
+
+    _items.forEach((key, value) {
+      totalAmount += value.price!*value.quantity!;
+    });
+
+    return totalAmount;
+  }
 // get previous quantity
   int getQuantity(ProductModel product) {
 
