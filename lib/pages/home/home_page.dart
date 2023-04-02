@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/pages/cart/cart_history.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
 
     MainFoodPage(),
     Container(child: Center(child: Text("Next1 Page")),),
-    Container(child: Center(child: Text("Next2 Page")),),
+    CartHistory(),
     Container(child: Center(child: Text("Next3 Page")),)
 
   ];
@@ -45,8 +46,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+
         selectedItemColor: AppColors.mainColor,
-        unselectedItemColor: Colors.amberAccent,
+        unselectedItemColor: Color(0xFF89dad0),
         showSelectedLabels: false,
         showUnselectedLabels: false,
         selectedFontSize: 0.0,
@@ -54,16 +56,16 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         onTap: onTap,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined),
+          BottomNavigationBarItem(icon: Icon(Icons.home_rounded),
           label: "Home"
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.history_sharp),
+          BottomNavigationBarItem(icon: Icon(Icons.history_rounded),
               label: "History"
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_rounded),
               label: "Orders"
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline),
+          BottomNavigationBarItem(icon: Icon(Icons.person_rounded),
               label: "Profile"
           )
         ],
