@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../data/controllers/popular_product_controller.dart';
 import '../../data/controllers/recommended_product_controller.dart';
+import '../../utils/dimensions.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: Center(
                 child: Image.asset(
               "assets/image/logo part 1.png",
-              width: 250,
+              width: Dimensions.splashImg,
             )),
           ),
           ScaleTransition(
@@ -66,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: Center(
                 child: Image.asset(
                   "assets/image/logo part 2.png",
-                  width: 250,
+                  width: Dimensions.splashImg,
                 )),
           ),
         ],
