@@ -38,6 +38,10 @@ class CartController extends GetxController {
       return e.value;
     }).toList();
   }
+  set setItems(Map<int,CartModel> setItems) {
+    _items = {};
+    _items = setItems;
+  }
 
   CartController({required this.cartRepo});
 
@@ -120,8 +124,15 @@ class CartController extends GetxController {
     update();
   }
 
+
+
   List<CartModel> getCartHistoryList() {
     return cartRepo.getHistoryList();
   }
 
+
+  void addToCartList() {
+    cartRepo.addToCartList(getItems);
+    update();
+  }
 }

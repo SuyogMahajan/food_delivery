@@ -29,10 +29,10 @@ class _MainFoodPageState extends State<MainFoodPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  children: [BigText(text:"Country",color: AppColors.mainColor,),
+                  children: [BigText(text:"INDIA",color: AppColors.mainColor,),
                     Row(
                       children: [
-                        SmallText(text:"City",color:Colors.black54,),
+                        SmallText(text:"Pune",color:Colors.black54,),
                         Icon(Icons.arrow_drop_down_rounded)
                       ],
                     )
